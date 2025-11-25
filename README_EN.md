@@ -1,0 +1,205 @@
+# Bitcoinaverage Crypto Ticker And Historical Price MCP Server
+
+English | [简体中文](./README.md) | [繁體中文](./README_ZH-TW.md)
+
+## 🚀 Quick Start with EMCP Platform
+
+**[EMCP](https://sit-emcp.kaleido.guru)** is a powerful MCP server management platform that allows you to quickly use various MCP servers without manual configuration!
+
+### Quick Start:
+
+1. 🌐 Visit **[EMCP Platform](https://sit-emcp.kaleido.guru)**
+2. 📝 Register and login
+3. 🎯 Go to **MCP Marketplace** to browse all available MCP servers
+4. 🔍 Search or find this server (`bach-bitcoinaverage_crypto_ticker_and_historical_price`)
+5. 🎉 Click the **"Install MCP"** button
+6. ✅ Done! You can now use it in your applications
+
+### EMCP Platform Advantages:
+
+- ✨ **Zero Configuration**: No need to manually edit config files
+- 🎨 **Visual Management**: Easy-to-use GUI for managing all MCP servers
+- 🔐 **Secure & Reliable**: Centralized API key and authentication management
+- 🚀 **One-Click Install**: Rich selection of servers in MCP Marketplace
+- 📊 **Usage Statistics**: Real-time service call monitoring
+
+Visit **[EMCP Platform](https://sit-emcp.kaleido.guru)** now to start your MCP journey!
+
+
+---
+
+## Introduction
+
+This is an automatically generated MCP server using [FastMCP](https://fastmcp.wiki) for accessing the Bitcoinaverage Crypto Ticker And Historical Price API.
+
+- **PyPI Package**: `bach-bitcoinaverage_crypto_ticker_and_historical_price`
+- **Version**: 1.0.0
+- **Transport Protocol**: stdio
+
+
+## 安装
+
+### 从 PyPI 安装:
+
+```bash
+pip install bach-bitcoinaverage_crypto_ticker_and_historical_price
+```
+
+### 从源码安装:
+
+```bash
+pip install -e .
+```
+
+## 运行
+
+### 方式 1: 使用 uvx（推荐，无需安装）
+
+```bash
+# 运行（uvx 会自动安装并运行）
+uvx --from bach-bitcoinaverage_crypto_ticker_and_historical_price bach_bitcoinaverage_crypto_ticker_and_historical_price
+
+# 或指定版本
+uvx --from bach-bitcoinaverage_crypto_ticker_and_historical_price@latest bach_bitcoinaverage_crypto_ticker_and_historical_price
+```
+
+### 方式 2: 直接运行（开发模式）
+
+```bash
+python server.py
+```
+
+### 方式 3: 安装后作为命令运行
+
+```bash
+# 安装
+pip install bach-bitcoinaverage_crypto_ticker_and_historical_price
+
+# 运行（命令名使用下划线）
+bach_bitcoinaverage_crypto_ticker_and_historical_price
+```
+
+## Configuration
+
+### API Authentication
+
+This API requires authentication. Please set environment variable:
+
+```bash
+export API_KEY="your_api_key_here"
+```
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `API_KEY` | API Key | Yes |
+| `PORT` | N/A | No |
+| `HOST` | N/A | No |
+
+
+
+### 在 Claude Desktop 中使用
+
+编辑 Claude Desktop 配置文件 `claude_desktop_config.json`:
+
+
+```json
+{
+  "mcpServers": {
+    "bitcoinaverage_crypto_ticker_and_historical_price": {
+      "command": "python",
+      "args": ["E:\path\to\bitcoinaverage_crypto_ticker_and_historical_price\server.py"],
+      "env": {
+        "API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+**Note**: Replace `E:\path\to\bitcoinaverage_crypto_ticker_and_historical_price\server.py` with the actual server file path.
+
+
+## 可用工具
+
+此服务器提供以下工具:
+
+
+### `crypto_exchange_ticker_price`
+
+Get the latest price data for specific cryptocurrency exchange.
+
+**端点**: `GET /exchanges/ticker/{exchange}`
+
+
+**参数**:
+
+- `exchange` (string) *必需*: Example value: bitstamp
+
+
+
+---
+
+
+### `historical_price_data_for_period`
+
+Returns history price for specific symbol for certain period. Works in parallel to the Ticker endpoint where both symbol set and market symbol need to be specified. This endpoint additionally accepts the period query parameter that specifies the resolution of the data. Period can be: minute, hour or day.
+
+**端点**: `GET /indices/{symbol_set}/history/{symbol}`
+
+
+**参数**:
+
+- `period` (string): Example value: day
+
+- `symbol_set` (string) *必需*: Example value: global
+
+- `symbol` (string) *必需*: Example value: BTCUSD
+
+
+
+---
+
+
+### `cryptocurrency_index_ticker_price`
+
+Get the latest Ticker price for thousands of cryptocurrencies. Our Ticker data includes the latest price, bid, ask, 24h volume, moving average and price changes.
+
+**端点**: `GET /indices/{symbol_set}/ticker/{symbol}`
+
+
+**参数**:
+
+- `symbol_set` (string) *必需*: Symbol set can be one of: global, local, crypto, tokens and light
+
+- `symbol` (string) *必需*: The shorthand symbol of the market you are requesting data for. A full list of supported symbols grouped by symbol set can be found here.
+
+
+
+---
+
+
+### `list_of_all_supported_crypto_markets`
+
+Lists all supported cryptocurrency markets by the BitcoinAverage API. New cryptos or tokens are added on a monthly basis.
+
+**端点**: `GET /info/indices/ticker`
+
+
+
+---
+
+
+
+## 技术栈
+
+- **FastMCP**: 快速、Pythonic 的 MCP 服务器框架
+- **传输协议**: stdio
+- **HTTP 客户端**: httpx
+
+## 开发
+
+This server is automatically generated by [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) tool.
+
+Version: 1.0.0
