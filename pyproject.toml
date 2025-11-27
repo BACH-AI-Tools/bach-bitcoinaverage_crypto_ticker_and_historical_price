@@ -1,6 +1,6 @@
 [project]
 name = "bach-bitcoinaverage_crypto_ticker_and_historical_price"
-version = "1.0.0"
+version = "2.0.0"
 description = "RapidAPI: blockchain-data-ltd-blockchain-data-ltd-default/bitcoinaverage-crypto-ticker-and-historical-price"
 readme = "README.md"
 requires-python = ">=3.10"

@@ -33,7 +33,7 @@
 這是一個 MCP 伺服器，用於存取 Bitcoinaverage Crypto Ticker And Historical Price API。
 
 - **PyPI 套件名**: `bach-bitcoinaverage_crypto_ticker_and_historical_price`
-- **版本**: 1.0.0
+- **版本**: 2.0.0
 - **傳輸協定**: stdio
 
 
@@ -201,4 +201,4 @@ Lists all supported cryptocurrency markets by the BitcoinAverage API. New crypto
 
 此伺服器由 [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) 工具自動生成。
 
-版本: 1.0.0
+版本: 2.0.0
