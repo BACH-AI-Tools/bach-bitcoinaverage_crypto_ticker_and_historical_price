@@ -1,0 +1,170 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bitcoinaverage Crypto Ticker And Historical Price",
+    "version": "1.0.0",
+    "description": "RapidAPI: blockchain-data-ltd-blockchain-data-ltd-default/bitcoinaverage-crypto-ticker-and-historical-price"
+  },
+  "servers": [
+    {
+      "url": "https://bitcoinaverage-crypto-ticker-and-historical-price.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/exchanges/ticker/{exchange}": {
+      "get": {
+        "summary": "Crypto Exchange Ticker price",
+        "description": "Get the latest price data for specific cryptocurrency exchange.",
+        "operationId": "crypto_exchange_ticker_price",
+        "parameters": [
+          {
+            "name": "exchange",
+            "in": "query",
+            "required": true,
+            "description": "Example value: bitstamp",
+            "schema": {
+              "type": "string",
+              "default": null,
+              "enum": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/indices/{symbol_set}/history/{symbol}": {
+      "get": {
+        "summary": "Historical price data for period",
+        "description": "Returns history price for specific symbol for certain period. Works in parallel to the Ticker endpoint where both symbol set and market symbol need to be specified. This endpoint additionally accepts the period query parameter that specifies the resolution of the data. Period can be: minute, hour or day.",
+        "operationId": "historical_price_data_for_period",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": false,
+            "description": "Example value: day",
+            "schema": {
+              "type": "string",
+              "default": null,
+              "enum": null
+            }
+          },
+          {
+            "name": "symbol_set",
+            "in": "query",
+            "required": true,
+            "description": "Example value: global",
+            "schema": {
+              "type": "string",
+              "default": null,
+              "enum": null
+            }
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": true,
+            "description": "Example value: BTCUSD",
+            "schema": {
+              "type": "string",
+              "default": null,
+              "enum": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/indices/{symbol_set}/ticker/{symbol}": {
+      "get": {
+        "summary": "Cryptocurrency Index Ticker price",
+        "description": "Get the latest Ticker price for thousands of cryptocurrencies. Our Ticker data includes the latest price, bid, ask, 24h volume, moving average and price changes.",
+        "operationId": "cryptocurrency_index_ticker_price",
+        "parameters": [
+          {
+            "name": "symbol_set",
+            "in": "query",
+            "required": true,
+            "description": "Symbol set can be one of: global, local, crypto, tokens and light",
+            "schema": {
+              "type": "string",
+              "default": null,
+              "enum": null
+            }
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": true,
+            "description": "The shorthand symbol of the market you are requesting data for. A full list of supported symbols grouped by symbol set can be found here.",
+            "schema": {
+              "type": "string",
+              "default": null,
+              "enum": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/info/indices/ticker": {
+      "get": {
+        "summary": "List of all supported crypto markets",
+        "description": "Lists all supported cryptocurrency markets by the BitcoinAverage API. New cryptos or tokens are added on a monthly basis.",
+        "operationId": "list_of_all_supported_crypto_markets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiAuth": []
+    }
+  ]
+}

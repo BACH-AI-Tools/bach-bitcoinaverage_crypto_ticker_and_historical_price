@@ -1,13 +1,14 @@
 """
 Bitcoinaverage Crypto Ticker And Historical Price MCP Server
 
-使用 FastMCP 的 from_openapi 方法自动生成
+MCP server for accessing API.
 
 Version: 1.0.0
 Transport: stdio
 """
 import os
 import json
+from pathlib import Path
 import httpx
 from fastmcp import FastMCP
 
@@ -22,8 +23,12 @@ API_KEY = os.getenv("API_KEY", "")
 TRANSPORT = "stdio"
 
 
-# OpenAPI 规范
-OPENAPI_SPEC = """{\n  \"openapi\": \"3.0.0\",\n  \"info\": {\n    \"title\": \"Bitcoinaverage Crypto Ticker And Historical Price\",\n    \"version\": \"1.0.0\",\n    \"description\": \"RapidAPI: blockchain-data-ltd-blockchain-data-ltd-default/bitcoinaverage-crypto-ticker-and-historical-price\"\n  },\n  \"servers\": [\n    {\n      \"url\": \"https://bitcoinaverage-crypto-ticker-and-historical-price.p.rapidapi.com\"\n    }\n  ],\n  \"paths\": {\n    \"/exchanges/ticker/{exchange}\": {\n      \"get\": {\n        \"summary\": \"Crypto Exchange Ticker price\",\n        \"description\": \"Get the latest price data for specific cryptocurrency exchange.\",\n        \"operationId\": \"crypto_exchange_ticker_price\",\n        \"parameters\": [\n          {\n            \"name\": \"exchange\",\n            \"in\": \"query\",\n            \"required\": true,\n            \"description\": \"Example value: bitstamp\",\n            \"schema\": {\n              \"type\": \"string\",\n              \"default\": null,\n              \"enum\": null\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {}\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/indices/{symbol_set}/history/{symbol}\": {\n      \"get\": {\n        \"summary\": \"Historical price data for period\",\n        \"description\": \"Returns history price for specific symbol for certain period. Works in parallel to the Ticker endpoint where both symbol set and market symbol need to be specified. This endpoint additionally accepts the period query parameter that specifies the resolution of the data. Period can be: minute, hour or day.\",\n        \"operationId\": \"historical_price_data_for_period\",\n        \"parameters\": [\n          {\n            \"name\": \"period\",\n            \"in\": \"query\",\n            \"required\": false,\n            \"description\": \"Example value: day\",\n            \"schema\": {\n              \"type\": \"string\",\n              \"default\": null,\n              \"enum\": null\n            }\n          },\n          {\n            \"name\": \"symbol_set\",\n            \"in\": \"query\",\n            \"required\": true,\n            \"description\": \"Example value: global\",\n            \"schema\": {\n              \"type\": \"string\",\n              \"default\": null,\n              \"enum\": null\n            }\n          },\n          {\n            \"name\": \"symbol\",\n            \"in\": \"query\",\n            \"required\": true,\n            \"description\": \"Example value: BTCUSD\",\n            \"schema\": {\n              \"type\": \"string\",\n              \"default\": null,\n              \"enum\": null\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {}\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/indices/{symbol_set}/ticker/{symbol}\": {\n      \"get\": {\n        \"summary\": \"Cryptocurrency Index Ticker price\",\n        \"description\": \"Get the latest Ticker price for thousands of cryptocurrencies. Our Ticker data includes the latest price, bid, ask, 24h volume, moving average and price changes.\",\n        \"operationId\": \"cryptocurrency_index_ticker_price\",\n        \"parameters\": [\n          {\n            \"name\": \"symbol_set\",\n            \"in\": \"query\",\n            \"required\": true,\n            \"description\": \"Symbol set can be one of: global, local, crypto, tokens and light\",\n            \"schema\": {\n              \"type\": \"string\",\n              \"default\": null,\n              \"enum\": null\n            }\n          },\n          {\n            \"name\": \"symbol\",\n            \"in\": \"query\",\n            \"required\": true,\n            \"description\": \"The shorthand symbol of the market you are requesting data for. A full list of supported symbols grouped by symbol set can be found here.\",\n            \"schema\": {\n              \"type\": \"string\",\n              \"default\": null,\n              \"enum\": null\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {}\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/info/indices/ticker\": {\n      \"get\": {\n        \"summary\": \"List of all supported crypto markets\",\n        \"description\": \"Lists all supported cryptocurrency markets by the BitcoinAverage API. New cryptos or tokens are added on a monthly basis.\",\n        \"operationId\": \"list_of_all_supported_crypto_markets\",\n        \"parameters\": [],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {}\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  \"components\": {\n    \"securitySchemes\": {\n      \"ApiAuth\": {\n        \"type\": \"apiKey\",\n        \"in\": \"header\",\n        \"name\": \"X-RapidAPI-Key\"\n      }\n    }\n  },\n  \"security\": [\n    {\n      \"ApiAuth\": []\n    }\n  ]\n}"""
+# 从文件加载 OpenAPI 规范
+def load_openapi_spec():
+    """从 openapi.json 文件加载 OpenAPI 规范"""
+    openapi_path = Path(__file__).parent / "openapi.json"
+    with open(openapi_path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 # 创建 HTTP 客户端
 # 设置默认 headers
@@ -52,7 +57,7 @@ client = httpx.AsyncClient(
 
 
 # 从 OpenAPI 规范创建 FastMCP 服务器
-openapi_dict = json.loads(OPENAPI_SPEC)
+openapi_dict = load_openapi_spec()
 mcp = FastMCP.from_openapi(
     openapi_spec=openapi_dict,
     client=client,

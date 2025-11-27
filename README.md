@@ -30,7 +30,7 @@
 
 ## 简介
 
-这是一个使用 [FastMCP](https://fastmcp.wiki) 自动生成的 MCP 服务器，用于访问 Bitcoinaverage Crypto Ticker And Historical Price API。
+这是一个 MCP 服务器，用于访问 Bitcoinaverage Crypto Ticker And Historical Price API。
 
 - **PyPI 包名**: `bach-bitcoinaverage_crypto_ticker_and_historical_price`
 - **版本**: 1.0.0
@@ -108,8 +108,8 @@ export API_KEY="your_api_key_here"
 {
   "mcpServers": {
     "bitcoinaverage_crypto_ticker_and_historical_price": {
-      "command": "python",
-      "args": ["E:\path\to\bitcoinaverage_crypto_ticker_and_historical_price\server.py"],
+      "command": "uvx",
+      "args": ["--from", "bach-bitcoinaverage_crypto_ticker_and_historical_price", "bach_bitcoinaverage_crypto_ticker_and_historical_price"],
       "env": {
         "API_KEY": "your_api_key_here"
       }
@@ -194,7 +194,6 @@ Lists all supported cryptocurrency markets by the BitcoinAverage API. New crypto
 
 ## 技术栈
 
-- **FastMCP**: 快速、Pythonic 的 MCP 服务器框架
 - **传输协议**: stdio
 - **HTTP 客户端**: httpx
 

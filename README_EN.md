@@ -30,7 +30,7 @@ Visit **[EMCP Platform](https://sit-emcp.kaleido.guru)** now to start your MCP j
 
 ## Introduction
 
-This is an automatically generated MCP server using [FastMCP](https://fastmcp.wiki) for accessing the Bitcoinaverage Crypto Ticker And Historical Price API.
+This is an MCP server for accessing the Bitcoinaverage Crypto Ticker And Historical Price API.
 
 - **PyPI Package**: `bach-bitcoinaverage_crypto_ticker_and_historical_price`
 - **Version**: 1.0.0
@@ -108,8 +108,8 @@ export API_KEY="your_api_key_here"
 {
   "mcpServers": {
     "bitcoinaverage_crypto_ticker_and_historical_price": {
-      "command": "python",
-      "args": ["E:\path\to\bitcoinaverage_crypto_ticker_and_historical_price\server.py"],
+      "command": "uvx",
+      "args": ["--from", "bach-bitcoinaverage_crypto_ticker_and_historical_price", "bach_bitcoinaverage_crypto_ticker_and_historical_price"],
       "env": {
         "API_KEY": "your_api_key_here"
       }
